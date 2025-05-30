@@ -72,7 +72,7 @@ def final_filter(df,
     )
 
 ## main logic
-df = pd.read_csv(r"processed_data\player_stats.csv")
+df = pd.read_csv(r"processed_data/player_stats.csv")
 all_countries = list(df["Country"].unique())
 
 # print(all_countries)
