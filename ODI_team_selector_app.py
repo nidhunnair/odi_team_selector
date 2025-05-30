@@ -83,6 +83,10 @@ st.divider()
 
 st.header("Filters") 
 
+#----Year filter----
+year_start,year_end = st.select_slider("Select the year",
+                                    options=list(range(min(df["debut"]),max(df["retire"]+1))),
+                                    value=((min(df["debut"])),max(df["retire"])))
 
 #---Country filter---
 country_select_box, country_checkbox = st.columns([2,1])
@@ -97,19 +101,10 @@ with country_select_box:
         countries = st.multiselect("Select Country", sorted(all_countries),
                                 default=sorted(all_countries),
                                 key="all_country_selected",placeholder="Select Country/Countries")
-        year_start,year_end = st.select_slider("Select the year",
-                                    options=list(range(min(df["debut"]),max(df["retire"]+1))),
-                                    value=((min(df["debut"])),max(df["retire"])))
-
     else:
         countries = st.multiselect("Select Country",
                                 sorted(all_countries),
                                 key="country_select",placeholder="Select Country/Countries")
-        year_start,year_end = st.select_slider("Select the year",
-                                    options=list(range(min(df["debut"]),max(df["retire"]+1))),
-                                    value=((min(df["debut"])),max(df["retire"])))
-
-
 
 
 #---batiing and bowling experience filter---
@@ -287,7 +282,7 @@ with table:
         st.subheader("Final XI")
         st.dataframe(finalXIdf[df_columns].sort_values("Batter_rank",ignore_index=True))
         if finalXIdf.shape[0]<11 and selected_players==11:
-            st.warning(f"Only {finalXIdf.shape[0]} players availabe with required conditions/roles")
+            st.warning(f"Only {finalXIdf.shape[0]} players available with required conditions/roles")
         elif finalXIdf.shape[0]==11:
             st.success("11 top players selected")
         st.write(f"Team Batting Average : {finalXIdf["Batting Avg"].mean():.2f}")
