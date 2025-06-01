@@ -301,7 +301,7 @@ with team:
     if selected_players==11:
         st.write(":green[11 Players selected]")
         if batter_df.shape[0] < batters or bowler_df.shape[0] < bowlers or allrnd_df.shape[0] < allrounders:
-            st.write(":orange[but not enough players available under each role ⚠]")
+            st.write(":orange[But not enough players available under selected roles ⚠]")
     elif selected_players < 11:
         st.write(f":orange[Please select {11-selected_players} more player(s)]")
         st.warning(f"11 players required. Only {selected_players} Players selected")
