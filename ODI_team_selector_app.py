@@ -157,8 +157,6 @@ with bowl_col:
 
         col_bowl_left,col_bowl_right  = st.columns(2)
         with col_bowl_left:
-            # min_inns_bowl = st.slider("MINIMUM innings played (bowling)",
-            #                     min_value=1, max_value=int(max(df["Inns_bowl"])))
             
             min_avg_bowl = st.number_input("MINIMUM bowling average", min_value=0,max_value=9999)
 
@@ -256,14 +254,6 @@ with team:
     with allrnd:
         allrounders = st.number_input("All Rounders",min_value=0,max_value=11)
     selected_players = batters + bowlers + allrounders
-    if selected_players==11:
-        st.write(":green[11 Players selected]")
-    elif selected_players < 11:
-        st.write(f":orange[Please select {11-selected_players} more player(s)]")
-        st.warning(f"11 players required. Only {selected_players} Players selected")
-    else:
-        st.write(f":red[Please remove {selected_players - 11} players]")
-        st.error(f"Only 11 players are allowed. {selected_players} Players selected")
 
 st.divider()
 
@@ -286,4 +276,35 @@ with table:
         elif finalXIdf.shape[0]==11:
             st.success("11 top players selected")
         st.write(f"Team Batting Average : {finalXIdf["Batting Avg"].mean():.2f}")
+
+with team:
+    with bat:
+        if batter_df.shape[0] == batters and batters!=0:
+            st.write("✅")
+        else:
+            if batters > 0:
+                st.write(f"❌ :red[Only {batter_df.shape[0]} Batters available]")
+    with bowl:
+        if bowler_df.shape[0] == bowlers and bowlers!=0:
+            st.write("✅")
+        else:
+            if bowlers > 0:
+                st.write(f"❌ :red[Only {bowler_df.shape[0]} Bowlers available]")
+    with allrnd:
+        if allrnd_df.shape[0] == allrounders and allrounders!=0:
+            st.write("✅")
+        else:
+            if allrounders > 0:
+                st.write(f"❌ :red[Only {allrnd_df.shape[0]} All-Rounders available]")
+              
     
+    if selected_players==11:
+        st.write(":green[11 Players selected]")
+        if batter_df.shape[0] < batters or bowler_df.shape[0] < bowlers or allrnd_df.shape[0] < allrounders:
+            st.write(":orange[but not enough players available under each role ⚠]")
+    elif selected_players < 11:
+        st.write(f":orange[Please select {11-selected_players} more player(s)]")
+        st.warning(f"11 players required. Only {selected_players} Players selected")
+    else:
+        st.write(f":red[Please remove {selected_players - 11} players]")
+        st.error(f"Only 11 players are allowed. {selected_players} Players selected")
